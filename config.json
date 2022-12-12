@@ -1,0 +1,73 @@
+{
+  "files": {
+    "folderPath": "../data",
+    "lastMeasureFileName": "weatherlink_export_last_measurement.txt"
+  },
+  "udp": {
+    "ip": "127.0.0.1",
+    "port": 8000,
+    "bufferSize": 1024
+  },
+  "api": {
+    "ip": "127.0.0.1",
+    "port": 5001,
+    "debug": 1
+  },
+  "requestTable": {
+    "Temp?": {
+      "name": "Temp",
+      "unit": "°C",
+      "dataName": "Outside Temperature"
+    },
+    "rH?": {
+      "name": "rH",
+      "unit": "%",
+      "dataName": "Outside Humidity"
+    },
+    "Baro?": {
+      "name": "Baro",
+      "unit": "hPa",
+      "dataName": "Current Barometer"
+    },
+    "V_wind?": {
+      "name": "V_wind",
+      "unit": "m/s",
+      "dataName": "Wind Speed"
+    },
+    "V_wind_avg?": {
+      "name": "V_wind_avg",
+      "unit": "m/s",
+      "dataName": "10 Min Avg Wind Speed"
+    },
+    "alpha_wind?": {
+      "name": "alpha_wind",
+      "unit": "°",
+      "dataName": "Wind Direction"
+    },
+    "Rain?": {
+      "name": "Rain",
+      "unit": "mm/h",
+      "dataName": "Rain Rate"
+    },
+    "Rain_day?": {
+      "name": "Rain_day",
+      "unit": "mm",
+      "dataName": "Day Rain"
+    },
+    "Light?": {
+      "name": "Light",
+      "unit": "W/m^2",
+      "dataName": "Solar Radiation"
+    },
+    "aH?": {
+      "name": "aH",
+      "unit": "g/m^3",
+      "dataName": "None"
+    },
+    "WVP?": {
+      "name": "WVP",
+      "unit": "hPa",
+      "dataName": "None"
+    }
+  }
+}
