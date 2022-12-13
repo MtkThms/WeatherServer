@@ -17,7 +17,7 @@ def _calcAbsolutHumidity(relativeHumidity: float, temperature: float):
     _A = 216.7 * _rH / 100.0 * _alpha * math.exp(_beta * _V / (_lambda + _V))
     # nominator
     _B = _V + 273.15
-    return round(_A / _B, 3)
+    return round(_A / _B, config["calc"]["roundDigits"])
 
 
 def readData():
@@ -43,6 +43,11 @@ def readData():
         print(f"File error: {err}")
         return None
 
+def _calcWaterVaporPressure(relativeHumidity, temperature) -> float:
+    absolutHumidity = _calcAbsolutHumidity(relativeHumidity, temperature)
+    _gasConstant = 461.5
+    return round(temperature * absolutHumidity * _gasConstant, config["calc"]["roundDigits"])
+
 
 def getData(request: str):
     if request == "help?":
@@ -66,9 +71,10 @@ def getData(request: str):
     elif request == "WVP?":
         relativeHumidity = float(measureFile[REQUEST_TABLE["rH?"]["dataName"]])
         temperature = float(measureFile[REQUEST_TABLE["Temp?"]["dataName"]])
-        absolutHumidity = _calcAbsolutHumidity(relativeHumidity, temperature)
-        gasConstant = 461.5  # constant for water vape
-        measureData = round(temperature * absolutHumidity * gasConstant, 3)
+        # absolutHumidity = _calcAbsolutHumidity(relativeHumidity, temperature)
+        # gasConstant = 461.5  # constant for water vape
+        # measureData = round(temperature * absolutHumidity * gasConstant, 3)
+        measureData = _calcWaterVaporPressure(relativeHumidity, temperature)
     else:
 
         measureData = measureFile[REQUEST_TABLE[request]["dataName"]]

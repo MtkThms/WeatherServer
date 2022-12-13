@@ -13,6 +13,9 @@
     "port": 5002,
     "debug": 1
   },
+  "calc": {
+    "roundDigits": 3
+  },
   "requestTable": {
     "Temp?": {
       "name": "Temp",
