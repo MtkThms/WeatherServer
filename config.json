@@ -1,12 +1,13 @@
 {
-  "files": {
-    "folderPath": "../data",
-    "lastMeasureFileName": "weatherlink_export_last_measurement.txt"
-  },
   "udp": {
     "ip": "127.0.0.1",
     "port": 8000,
-    "bufferSize": 1024
+    "bufferSize": 1024,
+    "debug": 0
+  },
+  "files": {
+    "folderPath": "../data",
+    "lastMeasureFileName": "weatherlink_export_last_measurement.txt"
   },
   "api": {
     "ip": "127.0.0.1",
@@ -14,7 +15,15 @@
     "debug": 1
   },
   "calc": {
-    "roundDigits": 3
+    "roundDigits": 3,
+    "absolutHumidity": {
+      "alpha": 6.112,
+      "beta": 17.62,
+      "lambda": 243.12
+    },
+    "waterVaporPressure": {
+      "gasConstant": 461.5
+    }
   },
   "requestTable": {
     "Temp?": {

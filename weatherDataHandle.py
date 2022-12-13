@@ -10,14 +10,20 @@ def _calcAbsolutHumidity(relativeHumidity: float, temperature: float):
     _rH = relativeHumidity
     _V = temperature
     # some const
-    _alpha = 6.112
-    _beta = 17.62
-    _lambda = 243.12
+    _alpha = config["absolutHumidity"]["alpha"]
+    _beta = config["absolutHumidity"]["beta"]
+    _lambda = config["absolutHumidity"]["lambda"]
     # denominator
     _A = 216.7 * _rH / 100.0 * _alpha * math.exp(_beta * _V / (_lambda + _V))
     # nominator
     _B = _V + 273.15
     return round(_A / _B, config["calc"]["roundDigits"])
+
+
+def _calcWaterVaporPressure(relativeHumidity, temperature) -> float:
+    absolutHumidity = _calcAbsolutHumidity(relativeHumidity, temperature)
+    _gasConstant = config["waterVaporPressure"]["gasConstant"]
+    return round(temperature * absolutHumidity * _gasConstant, config["calc"]["roundDigits"])
 
 
 def readData():
@@ -42,11 +48,6 @@ def readData():
     except FileNotFoundError as err:
         print(f"File error: {err}")
         return None
-
-def _calcWaterVaporPressure(relativeHumidity, temperature) -> float:
-    absolutHumidity = _calcAbsolutHumidity(relativeHumidity, temperature)
-    _gasConstant = 461.5
-    return round(temperature * absolutHumidity * _gasConstant, config["calc"]["roundDigits"])
 
 
 def getData(request: str):
