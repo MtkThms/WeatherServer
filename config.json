@@ -3,7 +3,7 @@
     "ip": "127.0.0.1",
     "port": 8000,
     "bufferSize": 1024,
-    "debug": 0
+    "debug": 1
   },
   "files": {
     "folderPath": "../data",
@@ -83,3 +83,5 @@
     }
   }
 }
+
+

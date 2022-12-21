@@ -6,23 +6,29 @@ import json  # handle configuration file
 class UdpServer:
 
     def __init__(self):
-        config = json.load(open("config.json"))  # load config file
+        self.config = json.load(open("config.json"))  # load config file
         # put config in variables
-        self.IP: str = config["udp"]["ip"]
-        self.PORT: int = config["udp"]["port"]
-        self.BUFFER_SIZE: int = config["udp"]["bufferSize"]
-        self.UdpServer: socket.socket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)  # create socket
+        self.IP: str = self.config["udp"]["ip"]
+        self.PORT: int = self.config["udp"]["port"]
+        self.BUFFER_SIZE: int = self.config["udp"]["bufferSize"]
+        self.UdpServer: socket.socket = \
+            socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)  # create socket
         self.UdpServer.bind((self.IP, self.PORT))  # set it to specific ip and port
         print("server started")
 
     def loop(self):
         while (True):  # start receive loop
-            requestFromClient, ClientAddress = self.UdpServer.recvfrom(
-                self.BUFFER_SIZE)  # wait (forever) to receive any requests
-            # print(f"request from client:{requestFromClient}")
-            requestFromClient = requestFromClient.decode('utf-8')  # decode request
-            response = weatherDataHandle.getData(requestFromClient)  # get weather data from file
-            self.UdpServer.sendto(response.encode('utf-8'), ClientAddress)  # send weather data to Client
+            # wait (forever) to receive any requests
+            requestFromClient, ClientAddress = self.UdpServer.recvfrom(self.BUFFER_SIZE)
+            # print message on console if in debug mode
+            if self.config["udp"]["debug"] == 1:
+                print(f"Request from client: {requestFromClient}")
+            # decode request
+            requestFromClient = requestFromClient.decode('utf-8')
+            # get weather data from file
+            response = weatherDataHandle.getData(requestFromClient)
+            # send weather data to client
+            self.UdpServer.sendto(response.encode('utf-8'), ClientAddress)
 
 
 if __name__ == "__main__":

@@ -2,7 +2,12 @@ import json
 import requests
 from  weatherDataHandle import AVAILABLE_REQUESTS
 
-hostURL="http://127.0.0.1:5000/"
+config = json.load(open("config.json"))
+hostIp = config["api"]["ip"]
+hostPort = config["api"]["port"]
+
+
+hostURL=f"http://{hostIp}:{hostPort}/"
 if __name__ == "__main__":
 
     for req in AVAILABLE_REQUESTS:
