@@ -33,10 +33,14 @@ def readData():
         folderPath = config["files"]["folderPath"]
         lastMeasureFile = config["files"]["lastMeasureFileName"]
         path = f'{folderPath}/{lastMeasureFile}'
-
+        #open file
         with open(path, 'r') as file_lastMeasure:
-            # read frist two lines
-            headList, dataList = file_lastMeasure.readlines()
+            try:
+                # read first two lines
+                headList, dataList = file_lastMeasure.readlines()
+            except ValueError as err: #handle error
+                print(f"File error: {err}")
+                return None
             # create list of headline and data, separated by <;>
             headList = headList.split(";")
             dataList = dataList.split(";")

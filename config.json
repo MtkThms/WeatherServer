@@ -7,7 +7,7 @@
   },
   "files": {
     "folderPath": "../data",
-    "lastMeasureFileName": "weatherlink_export_last_measurement.txt"
+    "lastMeasureFileName": "weatherlink_export_last_measurement_errortest.txt"
   },
   "api": {
     "ip": "127.0.0.1",
