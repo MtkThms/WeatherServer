@@ -9,9 +9,8 @@ hostPort = config["api"]["port"]
 
 hostURL=f"http://{hostIp}:{hostPort}/"
 if __name__ == "__main__":
-
-    for req in AVAILABLE_REQUESTS:
-        url=hostURL
-        response = requests.get(url)
-        response=response.json()
-        print(f"response :{response}")
+    #test last measurement
+    url=hostURL
+    response = requests.get(url)
+    response=response.json()
+    print(f"response :{response}")

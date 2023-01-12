@@ -3,7 +3,6 @@ import weatherDataHandle
 import uvicorn
 import json
 
-
 app = FastAPI()
 
 @app.get("/")
