@@ -28,6 +28,43 @@ def _calcWaterVaporPressure(relativeHumidity, temperature) -> float:
                  config["calc"]["roundDigits"])
 
 
+def readDataDate(date) -> dict:
+    date = date.split("_")
+    year = date[0]
+    month = date[1]
+    day = date[2]
+    hour = date[-2]
+    minute = date[-1]
+
+    if month[0] == '0':
+        month = month.replace("0","")
+    if day[0] == '0':
+        day = day.replace("0","")
+    if len(hour) == 1:
+        hour = '0' + hour
+    if len(minute) == 1:
+        minute = '0' + minute
+
+    folderPath = config["files"]["folderPath"]
+    path = f'{folderPath}/{year}_{month}_{day}_weatherlink_export.txt'
+    time = hour + ":" + minute
+
+    with open(path, 'r') as file:
+
+        lines = file.readlines()
+        headList = lines[0]
+        for line in lines:
+            if ' ' + time in line:
+                dataList = line
+        headList = headList.split(";")
+        dataList = dataList.split(";")
+
+        # create empty file and fill it with data
+        measureDict: dict = {}
+        for i in range(len(list(headList))):
+            measureDict[headList[i]] = dataList[i]
+        return measureDict
+
 def readData():
     try:
         folderPath = config["files"]["folderPath"]
@@ -35,12 +72,10 @@ def readData():
         path = f'{folderPath}/{lastMeasureFile}'
         #open file
         with open(path, 'r') as file_lastMeasure:
-            try:
-                # read first two lines
-                headList, dataList = file_lastMeasure.readlines()
-            except ValueError as err: #handle error
-                print(f"File error: {err}")
-                return None
+
+            # read first two lines
+            headList, dataList = file_lastMeasure.readlines()
+
             # create list of headline and data, separated by <;>
             headList = headList.split(";")
             dataList = dataList.split(";")
@@ -52,6 +87,9 @@ def readData():
             return measureDict
     except FileNotFoundError as err:
         print(f"File error: {err}")
+        return None
+    except ValueError as err:  # handle error
+        print(f"Value error: {err}")
         return None
 
 
