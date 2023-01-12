@@ -11,8 +11,7 @@ hostURL=f"http://{hostIp}:{hostPort}/"
 if __name__ == "__main__":
 
     for req in AVAILABLE_REQUESTS:
-        url=hostURL+req
+        url=hostURL
         response = requests.get(url)
         response=response.json()
-        response=json.loads(response)
         print(f"response :{response}")
