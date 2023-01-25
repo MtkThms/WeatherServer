@@ -1,6 +1,7 @@
 import socket  # tcp connection
 import weatherDataHandle  # read weather data
 import json  # handle configuration file
+from datetime import datetime # generate timestamps for debugging
 
 
 class UdpServer:
@@ -14,7 +15,7 @@ class UdpServer:
         self.UdpServer: socket.socket = \
             socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)  # create socket
         self.UdpServer.bind((self.IP, self.PORT))  # set it to specific ip and port
-        print("server started")
+        print("Server started")
 
     def loop(self):
         while (True):  # start receive loop
@@ -22,7 +23,8 @@ class UdpServer:
             requestFromClient, ClientAddress = self.UdpServer.recvfrom(self.BUFFER_SIZE)
             # print message on console if in debug mode
             if self.config["udp"]["debug"] == 1:
-                print(f"Request from client: {requestFromClient}")
+                timeStamp = datetime.now().strftime("%d.%m.%Y-%H:%M:%S")
+                print(f"{timeStamp} request from {ClientAddress[0]}: {requestFromClient}")
             # decode request
             requestFromClient = requestFromClient.decode('utf-8')
             # get weather data from file
